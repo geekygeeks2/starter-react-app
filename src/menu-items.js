@@ -55,6 +55,13 @@ export default {
           icon: icons['ChromeReaderModeOutlinedIcon']
         },
         {
+          id: 'registration-page',
+          title: 'Registration',
+          type: 'item',
+          url: '/registration',
+          icon: icons['ChromeReaderModeOutlinedIcon']
+        },
+        {
           id: 'auth',
           title: 'Authentication',
           type: 'collapse',

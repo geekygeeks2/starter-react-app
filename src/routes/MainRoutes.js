@@ -9,6 +9,7 @@ const DashboardDefault = Loadable(lazy(() => import('../views/Dashboard')));
 const UtilsTypography = Loadable(lazy(() => import('../views/Utils/Typography')));
 
 const SamplePage = Loadable(lazy(() => import('../views/SamplePage')));
+const Registration = Loadable(lazy(()=>import('../views/Registration')))
 
 // ==============================|| MAIN ROUTES ||============================== //
 
@@ -25,7 +26,8 @@ const MainRoutes = {
       element: <DashboardDefault />
     },
     { path: '/utils/util-typography', element: <UtilsTypography /> },
-    { path: '/sample-page', element: <SamplePage /> }
+    { path: '/sample-page', element: <SamplePage /> },
+    { path: '/registration', element: <Registration /> }
   ]
 };
 

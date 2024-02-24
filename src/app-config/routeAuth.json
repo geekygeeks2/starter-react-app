@@ -1,0 +1,20 @@
+[
+  {
+    "path": "/adminDashboard",
+    "roles": [
+      "ADMIN"
+    ]
+  },
+  {
+    "path": "/sell",
+    "roles": [
+      "ADMIN"
+    ]
+  },
+  {
+    "path": "/firm",
+    "roles": [
+      "ADMIN"
+    ]
+  }
+]

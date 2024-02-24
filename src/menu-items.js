@@ -24,62 +24,76 @@ const icons = {
 // eslint-disable-next-line
 export default {
   items: [
+    // {
+    //   id: 'navigation',
+    //   title: 'Materially',
+    //   caption: 'Dashboard',
+    //   type: 'group',
+    //   icon: icons['NavigationOutlinedIcon'],
+    //   children: [
+    //     {
+    //       id: 'dashboard',
+    //       title: 'Dashboard',
+    //       type: 'item',
+    //       icon: icons['HomeOutlinedIcon'],
+    //       url: '/dashboard/default'
+    //     }
+    //   ]
+    // },
     {
-      id: 'navigation',
-      title: 'Materially',
-      caption: 'Dashboard',
+      id: 'pages',
+      //title: 'Pages',
+      //caption: 'Prebuild Pages',
       type: 'group',
       icon: icons['NavigationOutlinedIcon'],
+      role:['TOP_ADMIN','SUPER_ADMIN','ADMIN'],
       children: [
         {
           id: 'dashboard',
           title: 'Dashboard',
           type: 'item',
           icon: icons['HomeOutlinedIcon'],
-          url: '/dashboard/default'
-        }
-      ]
-    },
-    {
-      id: 'pages',
-      title: 'Pages',
-      caption: 'Prebuild Pages',
-      type: 'group',
-      icon: icons['NavigationOutlinedIcon'],
-      children: [
+          url: '/dashboard/default',
+          role:['TOP_ADMIN','SUPER_ADMIN','ADMIN'],
+        },
         {
           id: 'sample-page',
           title: 'Sample Page',
           type: 'item',
           url: '/sample-page',
-          icon: icons['ChromeReaderModeOutlinedIcon']
+          icon: icons['ChromeReaderModeOutlinedIcon'],
+          role:['TOP_ADMIN'],
         },
         {
           id: 'registration-page',
           title: 'Registration',
           type: 'item',
           url: '/registration',
-          icon: icons['ChromeReaderModeOutlinedIcon']
+          icon: icons['ChromeReaderModeOutlinedIcon'],
+          role:['TOP_ADMIN','SUPER_ADMIN','ADMIN'],
         },
         {
           id: 'auth',
           title: 'Authentication',
           type: 'collapse',
           icon: icons['SecurityOutlinedIcon'],
+          role:['TOP_ADMIN'],
           children: [
             {
               id: 'login-1',
               title: 'Login',
               type: 'item',
               url: '/application/login',
-              target: true
+              target: true,
+              role:['TOP_ADMIN'],
             },
             {
               id: 'register',
               title: 'Register',
               type: 'item',
               url: '/application/register',
-              target: true
+              target: true,
+              role:['TOP_ADMIN'],
             }
           ]
         }
@@ -90,6 +104,7 @@ export default {
       title: 'Utils',
       type: 'group',
       icon: icons['AccountTreeOutlinedIcon'],
+      role:['TOP_ADMIN'],
       children: [
         {
           id: 'util-icons',
@@ -98,45 +113,47 @@ export default {
           url: 'https://mui.com/material-ui/material-icons/',
           icon: icons['AppsOutlinedIcon'],
           external: true,
-          target: true
+          target: true,
+          role:['TOP_ADMIN']
         },
         {
           id: 'util-typography',
           title: 'Typography',
           type: 'item',
           url: '/utils/util-typography',
-          icon: icons['FormatColorTextOutlinedIcon']
+          icon: icons['FormatColorTextOutlinedIcon'],
+          role:['TOP_ADMIN']
         }
       ]
     },
-    {
-      id: 'support',
-      title: 'Support',
-      type: 'group',
-      icon: icons['ContactSupportOutlinedIcon'],
-      children: [
-        {
-          id: 'disabled-menu',
-          title: 'Disabled Menu',
-          type: 'item',
-          url: '#',
-          icon: icons['BlockOutlinedIcon'],
-          disabled: true
-        },
-        {
-          id: 'documentation',
-          title: 'Documentation',
-          type: 'item',
-          url: 'https://codedthemes.gitbook.io/materially-react-material-documentation/',
-          icon: icons['HelpOutlineOutlinedIcon'],
-          chip: {
-            label: 'Help?',
-            color: 'primary'
-          },
-          external: true,
-          target: true
-        }
-      ]
-    }
+    // {
+    //   id: 'support',
+    //   title: 'Support',
+    //   type: 'group',
+    //   icon: icons['ContactSupportOutlinedIcon'],
+    //   children: [
+    //     {
+    //       id: 'disabled-menu',
+    //       title: 'Disabled Menu',
+    //       type: 'item',
+    //       url: '#',
+    //       icon: icons['BlockOutlinedIcon'],
+    //       disabled: true
+    //     },
+    //     {
+    //       id: 'documentation',
+    //       title: 'Documentation',
+    //       type: 'item',
+    //       url: 'https://codedthemes.gitbook.io/materially-react-material-documentation/',
+    //       icon: icons['HelpOutlineOutlinedIcon'],
+    //       chip: {
+    //         label: 'Help?',
+    //         color: 'primary'
+    //       },
+    //       external: true,
+    //       target: true
+    //     }
+    //   ]
+    // }
   ]
 };

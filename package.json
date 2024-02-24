@@ -1,6 +1,7 @@
 {
-  "name": "materially-free-react-admin-template",
-  "version": "2.0.0",
+  "name": "winpeaktrade",
+  "homepage": "http://app.winpeaktrade.com/",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.10.6",
@@ -12,8 +13,10 @@
     "@mui/utils": "^5.11.7",
     "@reduxjs/toolkit": "^1.9.3",
     "apexcharts": "^3.37.0",
+    "axios": "^1.6.7",
     "buffer": "^6.0.3",
     "crypto-browserify": "^3.12.0",
+    "crypto-js": "^4.2.0",
     "formik": "^2.2.9",
     "framer-motion": "^9.0.2",
     "material-ui-popup-state": "^5.0.4",

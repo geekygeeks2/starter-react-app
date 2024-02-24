@@ -52,7 +52,7 @@ const NavItem = ({ item, level }) => {
       <ListItemIcon sx={{ minWidth: 25 }}>{itemIcon}</ListItemIcon>
       <ListItemText
         primary={
-          <Typography sx={{ pl: 1.4 }} variant={customization.isOpen === item.id ? 'subtitle1' : 'body1'} color="inherit">
+          <Typography sx={{ pl: 1.4 }} variant={customization.isOpen === item.id ? 'subtitle' : 'body'} color="inherit">
             {item.title}
           </Typography>
         }

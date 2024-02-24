@@ -1,0 +1,19 @@
+[ 
+{ "path": "/sell",
+  "title": "All Sell",
+  "icon": "mdi mdi-truck-delivery menu-icon", 
+  "state": "sellMenuOpen",
+  "role": [
+    "ADMIN"
+  ]
+},
+{ "path": "/firm",
+  "title": "Firm Detail",
+  "icon": "mdi mdi-yin-yang mdi-spin menu-icon", 
+  "state": "firmMenuOpen",
+  "role": [
+    "ADMIN"
+  ]
+}
+]
+    

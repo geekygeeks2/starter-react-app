@@ -10,7 +10,10 @@ import menuItem from 'menu-items';
 // ==============================|| MENULIST ||============================== //
 
 const MenuList = () => {
-  const navItems = menuItem.items.map((item) => {
+  const JWT_AUTH_TOKEN = localStorage.getItem("token");
+  const USER = localStorage.getItem("userInformation") && JSON.parse(localStorage.getItem("userInformation"));
+  const roleName= USER && USER.userInfo && USER.userInfo.roleName
+  const navItems = roleName && menuItem.items.flatMap((menu) => (menu.role.includes(roleName)  ? menu : [])).map((item) => {
     switch (item.type) {
       case 'group':
         return <NavGroup key={item.id} item={item} />;

@@ -1,4 +1,5 @@
 import React from 'react';
+import Axios from "axios";
 import { Button,
     DialogActions,
     DialogContent,
@@ -11,6 +12,7 @@ import { Button,
 } from '@mui/material';
 import {RegisterFormValidation as validationSchema} from '../Utils/validation';
 import { useFormik } from 'formik';
+import { SETTING } from 'app-config/cofiguration';
 
 
 const RegisterationForm = ({handleCloseModal}) => {
@@ -19,47 +21,40 @@ const RegisterationForm = ({handleCloseModal}) => {
             firstName:"",
             lastName:"",
             gender:"",
-            phone:"",
+            phone1:"",
             email:"",
-            aadharCard:"",
-            panCard:""
+            aadharNumber:"",
+            panNumber:""
        },
         validationSchema,
-       onSubmit: (values) => {
-        console.log("values",values)
-        // values.jobDescription = description
-        // const openingDate = dayjs((values.openingDate as any)["$d"]).valueOf();
-        // const expireDate = dayjs((values.expiryDate as any)["$d"]).valueOf();
-        // const payload={
-        //     title: values.title,
-        //     experience: values.experience,
-        //     numberOfOpenings: values.numberOfOpenings,
-        //     location:values.location,
-        //     salary: values.salary,
-        //     mustHaveSkills:values.mustHaveSkills,
-        //     jobDescription:values.jobDescription,
-        //     industryType:values.industryType,
-        //     department:values.department,
-        //     employmentType: values.employmentType,
-        //     jobProfile:values.jobProfile,
-        //     education: values.education,
-        //     status:values.status,
-        //     workPlaceType:values.workPlaceType,
-        //     aboutCompany:values.aboutCompany,
-        //     technologyId:values.technologyId,    
-        //     openingDate:openingDate,
-        //     expiryDate:expireDate,
-        //     experienced:values.experienced
-        // }
-        // setLoading(true)
-        // dispatch(createVacancys(payload)).then(()=>{
-        //     handleCloseModal()
-        // }).catch((err)=>{
-        //     console.log(err.message)
-        // }).finally(()=>{
-        //     setLoading(false)
-        // })
-    }
+       onSubmit: async (values) => {
+        console.log("values",values)    
+          //setLoader(true)
+          let dataToSend = {
+           ...values,
+           roleName:"AGENT"
+          };
+          let options = SETTING.HEADER_PARAMETERS;
+          options['Authorization'] = localStorage.getItem("token")
+          await Axios.post(SETTING.APP_CONSTANT.API_URL+`admin/addUser`, dataToSend,{headers: options})
+          .then((res) => {
+            setLoader(false)
+            if (res && res.data.success) {
+                handleCloseModal()
+              //toast["success"]("Logged in successfully");
+            } else {
+              //toast["error"](res && res.data && res.data.message? res.data.message:"user name or Password is wrong. Please try again!");
+            }
+          })
+          .catch((err) =>{
+            setLoader(false)
+            const errorMessage = 'Login error'
+            //toast["error"](errorMessage);
+          });
+
+          return false;
+      
+        }
     })
    
     const genderData = [
@@ -138,12 +133,12 @@ const RegisterationForm = ({handleCloseModal}) => {
                 <Grid item xs={12} sm={6}>
                     <TextField 
                         fullWidth 
-                        name="phone" 
-                        label="Phone number" 
+                        name="phone1" 
+                        label="phone number" 
                         type='text' 
-                        value={formik.values?.phone}
-                        error={formik.touched.phone && !!formik.errors.phone}
-                        helperText={formik.touched.phone && formik.errors.phone}
+                        value={formik.values?.phone1}
+                        error={formik.touched.phone1 && !!formik.errors.phone1}
+                        helperText={formik.touched.phone1 && formik.errors.phone1}
                         onChange={formik.handleChange}
                     />
                 </Grid>
@@ -162,24 +157,24 @@ const RegisterationForm = ({handleCloseModal}) => {
                 <Grid item xs={12} sm={6}>
                     <TextField 
                         fullWidth 
-                        name="aadharCard" 
-                        label="Aadhar Card" 
+                        name="aadharNumber" 
+                        label="Aadhar Number" 
                         type='text' 
-                        value={formik.values?.aadharCard}
-                        error={formik.touched.aadharCard && !!formik.errors.aadharCard}
-                        helperText={formik.touched.aadharCard && formik.errors.aadharCard}
+                        value={formik.values?.aadharNumber}
+                        error={formik.touched.aadharNumber && !!formik.errors.aadharNumber}
+                        helperText={formik.touched.aadharNumber && formik.errors.aadharNumber}
                         onChange={formik.handleChange}
                     />
                 </Grid>
                 <Grid item xs={12} sm={6}>
                     <TextField 
                         fullWidth 
-                        name="panCard" 
-                        label="Pan Card" 
+                        name="panNumber" 
+                        label="Pan Number" 
                         type='text' 
-                        value={formik.values?.panCard}
-                        error={formik.touched.panCard && !!formik.errors.panCard}
-                        helperText={formik.touched.panCard && formik.errors.panCard}
+                        value={formik.values?.panNumber}
+                        error={formik.touched.panNumber && !!formik.errors.panNumber}
+                        helperText={formik.touched.panNumber && formik.errors.panNumber}
                         onChange={formik.handleChange}
                     />
                 </Grid>

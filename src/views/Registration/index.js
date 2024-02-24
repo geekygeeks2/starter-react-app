@@ -1,5 +1,6 @@
-import React,{useState} from 'react';
+import React,{useEffect, useState} from 'react';
 import { Link } from 'react-router-dom';
+import Axios from "axios";
 import { CardHeader, CardContent, Divider, } from '@mui/material';
 
 // material-ui
@@ -36,6 +37,7 @@ import {
 import Breadcrumb from 'component/Breadcrumb';
 import { gridSpacing } from 'config.js';
 import RegisterationForm from './RegistrationForm';
+import { SETTING } from 'app-config/cofiguration';
 
 // ==============================|| SAMPLE PAGE ||============================== //
 
@@ -54,10 +56,36 @@ function createData(name, calories, fat, carbs, protein) {
 
 const RegistrationPage = () => {
     const [isRegister, setIsRegister]=useState(false)
+    const [users, setUsers]= useState([])
+    const [loader, setLoader]= useState(false)
     const styleButton = {
         bgcolor: 'primary',
         padding: '12px 20px'
       } 
+
+      useEffect(() => {
+        getAllUser()
+      },[]); 
+    const getAllUser=async()=>{
+
+      let options = SETTING.HEADER_PARAMETERS;
+      options['Authorization'] = localStorage.getItem("token")
+      await Axios.get(SETTING.APP_CONSTANT.API_URL+`admin/getAllUser`,{headers: options})
+      .then((res) => {
+        setLoader(false)
+        if (res && res.data.success) {
+          setUsers( res.data.users)
+          //toast["success"]("Logged in successfully");
+        } else {
+          //toast["error"](res && res.data && res.data.message? res.data.message:"user name or Password is wrong. Please try again!");
+        }
+      })
+      .catch((err) =>{
+        setLoader(false)
+        const errorMessage = 'Login error'
+        //toast["error"](errorMessage);
+      });
+    } 
     
       const handleRegister=(()=>setIsRegister(true))
       const handleClose = (() => setIsRegister(false))
@@ -71,9 +99,9 @@ const RegistrationPage = () => {
           Registration
         </Typography>
       </Breadcrumb>
-      <Stack direction="row" alignItems="center" justifyContent="right" mb={5}>
+      <Stack direction="row" alignItems="center" justifyContent="left" mb={5}>
       <Button variant="contained" sx={styleButton} onClick={handleRegister}>
-            New Job
+            Agent Registration
           </Button>
         </Stack>
         <Card>
@@ -81,26 +109,26 @@ const RegistrationPage = () => {
       <Table aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell>Dessert (100g serving)</TableCell>
-            <TableCell align="right">Calories</TableCell>
-            <TableCell align="right">Fat&nbsp;(g)</TableCell>
-            <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-            <TableCell align="right">Protein&nbsp;(g)</TableCell>
+            <TableCell>Date</TableCell>
+            <TableCell align="right">Name</TableCell>
+            <TableCell align="right">Role</TableCell>
+            <TableCell align="right">Phone Number</TableCell>
+            {/* <TableCell align="right"></TableCell> */}
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {users.length>0 && users.map((row) => (
             <TableRow
-              key={row.name}
+              key={row._id}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell component="th" scope="row">
-                {row.name}
+                {row.created}
               </TableCell>
-              <TableCell align="right">{row.calories}</TableCell>
-              <TableCell align="right">{row.fat}</TableCell>
-              <TableCell align="right">{row.carbs}</TableCell>
-              <TableCell align="right">{row.protein}</TableCell>
+              <TableCell align="right">{row.userInfo.fullName}</TableCell>
+              <TableCell align="right">{row.userInfo.roleName}</TableCell>
+              <TableCell align="right">{row.userInfo.phone1}</TableCell>
+              {/* <TableCell align="right">{row.protein}</TableCell> */}
             </TableRow>
           ))}
         </TableBody>

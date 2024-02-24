@@ -37,6 +37,14 @@ const ProfileSection = () => {
     setOpen(false);
   };
 
+  const handleClick=()=>{
+    localStorage.clear();
+    // toast["success"]("Logged out successfully.");
+    setTimeout(()=>{
+      window.location.href = "/"
+      },300)
+  }
+
   const prevOpen = React.useRef(open);
   React.useEffect(() => {
     if (prevOpen.current === true && open === false) {
@@ -123,7 +131,7 @@ const ProfileSection = () => {
                     <ListItemIcon>
                       <MeetingRoomTwoToneIcon />
                     </ListItemIcon>
-                    <ListItemText primary="Logout" />
+                    <ListItemText primary="Logout" onClick={handleClick} />
                   </ListItemButton>
                 </List>
               </ClickAwayListener>

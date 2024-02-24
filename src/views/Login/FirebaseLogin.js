@@ -1,4 +1,6 @@
 import React from 'react';
+import Axios from "axios";
+import { useNavigate } from 'react-router-dom';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
@@ -25,12 +27,16 @@ import { Formik } from 'formik';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import Google from 'assets/images/social-google.svg';
+import { encryptAES } from 'views/Utils/helper';
+import { SETTING } from 'app-config/cofiguration';
 
 // ==============================|| FIREBASE LOGIN ||============================== //
 
 const FirebaseLogin = ({ ...rest }) => {
   const theme = useTheme();
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = React.useState(false);
+  const [loader, setLoader] = React.useState(false)
 
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
@@ -42,7 +48,7 @@ const FirebaseLogin = ({ ...rest }) => {
 
   return (
     <>
-      <Grid container justifyContent="center">
+      {/* <Grid container justifyContent="center">
         <Grid item xs={12}>
           <Button
             fullWidth={true}
@@ -73,40 +79,76 @@ const FirebaseLogin = ({ ...rest }) => {
             Sign in with Google
           </Button>
         </Grid>
-      </Grid>
+      </Grid> */}
 
-      <Box alignItems="center" display="flex" mt={2}>
+      {/* <Box alignItems="center" display="flex" mt={2}>
         <Divider sx={{ flexGrow: 1 }} orientation="horizontal" />
         <Typography color="textSecondary" variant="h5" sx={{ m: theme.spacing(2) }}>
           OR
         </Typography>
         <Divider sx={{ flexGrow: 1 }} orientation="horizontal" />
-      </Box>
+      </Box> */}
 
       <Formik
         initialValues={{
-          email: '',
+          userId: '',
           password: '',
-          submit: null
         }}
         validationSchema={Yup.object().shape({
-          email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
-          password: Yup.string().max(255).required('Password is required')
+          userId: Yup.string().max(10).required('User Id is required'),
+          password: Yup.string().max(15).required('Password is required')
         })}
+
+        onSubmit={async(values, { setSubmitting }) => {
+          //console.log("valuesvaluesvalues", values)
+          //setLoader(true)                                           
+            let dataToSend = {
+              userId: values.userId,
+              password: encryptAES(values.password),
+            };
+            
+            await Axios.post(SETTING.APP_CONSTANT.API_URL+`public/userlogin`, dataToSend)
+            .then((res) => {
+              setLoader(false)
+              if (res && res.data.success) {
+                const user = res.data.data.user
+                localStorage.setItem("userInformation", JSON.stringify(res.data.data.user))
+                localStorage.setItem("token", JSON.stringify(res.data.data.token))
+                //toast["success"]("Logged in successfully");
+                //saveSecurityLogs(menuUrl,"Login", undefined, user._id)
+                  const roleName= user.userInfo.roleName
+                window.location.href='/'
+                //navigate('/dashboard/default', { replace: true });
+              } else {
+                //toast["error"](res && res.data && res.data.message? res.data.message:"user name or Password is wrong. Please try again!");
+              }
+            })
+            .catch((err) =>{
+              setLoader(false)
+              const errorMessage = 'Login error'
+              //toast["error"](errorMessage);
+            });
+
+            return false;
+        }}
+
+        // onSubmit={ async (values, { setSubmitting }) => {
+    
+        // }}
       >
         {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
           <form noValidate onSubmit={handleSubmit} {...rest}>
             <TextField
-              error={Boolean(touched.email && errors.email)}
+              error={Boolean(touched.userId && errors.userId)}
               fullWidth
-              helperText={touched.email && errors.email}
-              label="Email Address / Username"
+              helperText={touched.userId && errors.userId}
+              label="Win Peak Trade Id"
               margin="normal"
-              name="email"
+              name="userId"
               onBlur={handleBlur}
               onChange={handleChange}
-              type="email"
-              value={values.email}
+              type="text"
+              value={values.userId}
               variant="outlined"
             />
 
@@ -141,13 +183,13 @@ const FirebaseLogin = ({ ...rest }) => {
                 </FormHelperText>
               )}
             </FormControl>
-            <Grid container justifyContent="flex-end">
+            {/* <Grid container justifyContent="flex-end">
               <Grid item>
                 <Typography variant="subtitle2" color="primary" sx={{ textDecoration: 'none' }}>
                   Forgot Password?
                 </Typography>
               </Grid>
-            </Grid>
+            </Grid> */}
 
             {errors.submit && (
               <Box mt={3}>
@@ -156,7 +198,9 @@ const FirebaseLogin = ({ ...rest }) => {
             )}
 
             <Box mt={2}>
-              <Button color="primary" disabled={isSubmitting} fullWidth size="large" type="submit" variant="contained">
+              <Button color="primary" 
+              //disabled={isSubmitting} 
+              fullWidth size="large" type="submit" variant="contained">
                 Log In
               </Button>
             </Box>

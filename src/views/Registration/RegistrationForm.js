@@ -24,7 +24,8 @@ const RegisterationForm = ({handleCloseModal}) => {
             phone1:"",
             email:"",
             aadharNumber:"",
-            panNumber:""
+            panNumber:"",
+            Role:""
        },
         validationSchema,
        onSubmit: async (values) => {
@@ -53,13 +54,18 @@ const RegisterationForm = ({handleCloseModal}) => {
           });
 
           return false;
-      
         }
     })
    
     const genderData = [
         { value: 'Male', label: 'Male' },
         { value: 'Female', label: 'Female' },
+        { value: 'Other', label: 'Other' },
+      ];
+    
+      const roleData = [
+        { value: 'admin', label: 'Admin' },
+        { value: 'topAdmin', label: 'TopAdmin' },
         { value: 'Other', label: 'Other' },
       ];
     const handleClose = () => {
@@ -130,7 +136,33 @@ const RegisterationForm = ({handleCloseModal}) => {
             />  
                 </Grid>
 
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={12} sm={4}>
+                <Autocomplete
+              disablePortal
+              options={roleData}
+              fullWidth
+              onChange={(event, newValue) => {
+                formik.setFieldValue("Role",newValue?.label); // Set the value in formik
+              }}
+              value={formik.values?.Role}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  error={Boolean(
+                    formik?.touched?.Role &&
+                      formik?.errors?.Role
+                  )}
+                  name="Role"
+                  helperText={
+                    formik.touched.Role &&
+                    formik.errors.Role
+                  }
+                  label="Role"
+                />
+              )}
+            />  
+                </Grid>
+                <Grid item xs={12} sm={4}>
                     <TextField 
                         fullWidth 
                         name="phone1" 
@@ -142,7 +174,7 @@ const RegisterationForm = ({handleCloseModal}) => {
                         onChange={formik.handleChange}
                     />
                 </Grid>
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={12} sm={4}>
                     <TextField 
                         fullWidth 
                         name="email" 

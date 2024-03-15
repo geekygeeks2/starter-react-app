@@ -10,7 +10,8 @@ import AuthLogin from './FirebaseLogin';
 
 // assets
 //import Logo from 'assets/images/logo-dark.svg';
-import Logo from 'assets/images/logowin3.png';
+import Logo from 'assets/images/logo.png';
+import Loader from 'component/Loader/Loader';
 
 // ==============================|| LOGIN ||============================== //
 
@@ -18,12 +19,14 @@ const Login = () => {
   const theme = useTheme();
 
   return (
+    
     <Grid
       container
       justifyContent="center"
       alignItems="center"
       sx={{ backgroundColor: theme.palette.common.black, height: '100%', minHeight: '100vh' }}
     >
+    {/* <Loader loading={true}/> */}
       <Grid item xs={11} sm={7} md={6} lg={4}>
         <Card
           sx={{
@@ -42,12 +45,14 @@ const Login = () => {
           <CardContent sx={{ p: theme.spacing(5, 4, 3, 4) }}>
             <Grid container direction="column" spacing={4} justifyContent="center">
               <Grid item xs={12}>
-                <Grid container justifyContent="space-between">
+                <Grid container style={{display:'flex', justifyContent:'center'}}>
                   <Grid item>
                     <RouterLink to="/">
                       <img alt="Auth method" src={Logo} />
                     </RouterLink>
                   </Grid>
+                </Grid>
+                <Grid container justifyContent="space-between">
                   <Grid item>
                     <Typography color="textPrimary" gutterBottom variant="h2">
                       Log in

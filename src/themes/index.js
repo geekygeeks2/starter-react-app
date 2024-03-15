@@ -410,6 +410,26 @@ export function theme() {
             color: textDark
           }
         }
+      },
+      MuiSnackbar: {
+        variants: [
+          {
+            props: { variant: "success" },
+            style: {
+              "& .MuiSnackbarContent-root": {
+                background: "green"
+              }
+            }
+          },
+          {
+            props: { variant: "error" },
+            style: {
+              "& .MuiSnackbarContent-root": {
+                background: "red"
+              }
+            }
+          }
+        ]
       }
     }
   });

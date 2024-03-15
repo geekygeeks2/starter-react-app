@@ -46,7 +46,7 @@ export default {
       //caption: 'Prebuild Pages',
       type: 'group',
       icon: icons['NavigationOutlinedIcon'],
-      role:['TOP_ADMIN','SUPER_ADMIN','ADMIN'],
+      role:['TOP_ADMIN','SUPER_ADMIN','ADMIN','AGENT','INVESTOR'],
       children: [
         {
           id: 'dashboard',
@@ -54,7 +54,7 @@ export default {
           type: 'item',
           icon: icons['HomeOutlinedIcon'],
           url: '/dashboard/default',
-          role:['TOP_ADMIN','SUPER_ADMIN','ADMIN'],
+          role:['TOP_ADMIN','SUPER_ADMIN','ADMIN','AGENT','INVESTOR'],
         },
         {
           id: 'sample-page',
@@ -70,7 +70,7 @@ export default {
           type: 'item',
           url: '/registration',
           icon: icons['ChromeReaderModeOutlinedIcon'],
-          role:['TOP_ADMIN','SUPER_ADMIN','ADMIN'],
+          role:['TOP_ADMIN','SUPER_ADMIN','ADMIN','AGENT','INVESTOR'],
         },
         {
           id: 'auth',

@@ -13,7 +13,8 @@ import MenuList from './MenuList';
 import { drawerWidth } from 'config.js';
 
 // assets
-import logo from 'assets/images/logo.svg';
+//import logo from 'assets/images/logo.svg';
+import logo from 'assets/images/logo.png';
 
 // custom style
 const Nav = styled((props) => <nav {...props} />)(({ theme }) => ({
@@ -30,8 +31,9 @@ const Sidebar = ({ drawerOpen, drawerToggle, window }) => {
   const matchUpMd = useMediaQuery(theme.breakpoints.up('md'));
   const drawer = (
     <>
-      <Box sx={{ display: { md: 'none', xs: 'block' } }}>
+      <Box sx={{ display: { md: 'none', xs: 'block' } }} >
         <Grid
+          style={{backgroundColor:'white'}}
           container
           direction="row"
           justifyContent="center"
@@ -45,8 +47,8 @@ const Sidebar = ({ drawerOpen, drawerToggle, window }) => {
             boxShadow: '0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12)'
           }}
         >
-          <Grid item>
-            <img src={logo} alt="Logo" />
+          <Grid item >
+            <img src={logo} alt="Logo" height={'40px'}/>
           </Grid>
         </Grid>
       </Box>

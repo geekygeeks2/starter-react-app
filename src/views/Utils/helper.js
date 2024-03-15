@@ -4,6 +4,7 @@ import Axios from "axios";
 const CryptoJS = require('crypto-js');
 
 const SECRET_MSG =  process.env.REACT_APP_SECRET_MSG
+const SECRET_MSG_PASSWORD =  process.env.REACT_APP_SECRET_MSG_PASSWORD
 const USER = localStorage.getItem("userInformation") && JSON.parse(localStorage.getItem("userInformation"));
 export const activityTypeList =['Login', 'Logout', 'Update','Create/Add','Delete','Menu Log','Event Log','Status Change','Suspended', 'Error Log']
 
@@ -29,6 +30,23 @@ export const capitalize=(sentance)=>{
 
  export const encryptAES = (text) => {
     return CryptoJS.AES.encrypt(text, SECRET_MSG).toString();
+  }
+
+export const  passwordDecryptAES = (encryptedBase64) => {
+    const decrypted = CryptoJS.AES.decrypt(encryptedBase64, SECRET_MSG_PASSWORD);
+    if (decrypted) {
+        try {
+            const str = decrypted.toString(CryptoJS.enc.Utf8);
+            if (str.length > 0) {
+                return str;
+            } else {
+                return encryptedBase64;
+            }
+        } catch (e) {
+            return encryptedBase64;
+        }
+    }
+    return encryptedBase64;
   }
 
 export const saveSecurityLogs= async(menuUrl, activityType, message='',userId='')=>{

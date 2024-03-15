@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Axios from "axios";
 import { useNavigate } from 'react-router-dom';
 
@@ -16,7 +16,8 @@ import {
   InputLabel,
   OutlinedInput,
   InputAdornment,
-  IconButton
+  IconButton,
+  Snackbar
 } from '@mui/material';
 
 //  third party
@@ -29,6 +30,8 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import Google from 'assets/images/social-google.svg';
 import { encryptAES } from 'views/Utils/helper';
 import { SETTING } from 'app-config/cofiguration';
+import Slide from '@mui/material/Slide';
+import Loader from 'component/Loader/Loader';
 
 // ==============================|| FIREBASE LOGIN ||============================== //
 
@@ -37,6 +40,13 @@ const FirebaseLogin = ({ ...rest }) => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = React.useState(false);
   const [loader, setLoader] = React.useState(false)
+  const [toast, setToast]= useState({
+    open: false, 
+    message:'test',
+    vertical: 'top',
+    horizontal: 'right',
+    error: false,
+  })
 
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
@@ -45,9 +55,20 @@ const FirebaseLogin = ({ ...rest }) => {
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
-
+  const { vertical, horizontal, open, message, error } = toast;
   return (
     <>
+ 
+         <Snackbar 
+              open={open}
+              anchorOrigin={{vertical, horizontal }}
+              onClose={() => setToast({...toast, open: false})}
+              TransitionComponent={Slide}
+              message={message}
+              key={vertical + horizontal}
+              autoHideDuration={1000}
+              variant={error?'error':'success'}
+            />
       {/* <Grid container justifyContent="center">
         <Grid item xs={12}>
           <Button
@@ -114,13 +135,14 @@ const FirebaseLogin = ({ ...rest }) => {
                 const user = res.data.data.user
                 localStorage.setItem("userInformation", JSON.stringify(res.data.data.user))
                 localStorage.setItem("token", JSON.stringify(res.data.data.token))
-                //toast["success"]("Logged in successfully");
+                setToast({ ...toast, open: true, message:'Logged in successfully'})
                 //saveSecurityLogs(menuUrl,"Login", undefined, user._id)
                   const roleName= user.userInfo.roleName
                 window.location.href='/'
                 //navigate('/dashboard/default', { replace: true });
               } else {
-                //toast["error"](res && res.data && res.data.message? res.data.message:"user name or Password is wrong. Please try again!");
+                const errorMessage= res && res.data && res.data.message? res.data.message:"Win Peak Id or Password is wrong. Please try again!"
+                setToast({ ...toast, open: true, error: true, message:errorMessage})
               }
             })
             .catch((err) =>{
@@ -137,7 +159,9 @@ const FirebaseLogin = ({ ...rest }) => {
         // }}
       >
         {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
+          
           <form noValidate onSubmit={handleSubmit} {...rest}>
+       
             <TextField
               error={Boolean(touched.userId && errors.userId)}
               fullWidth
